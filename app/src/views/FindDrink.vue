@@ -11,7 +11,11 @@
                 </div>
                 <div>
                 <h4> {{title}}</h4>
-               
+                <ul>
+                    <li v-for="(ingredient, i) in drinkIngredients[index]" :key="i">
+                        {{ingredient}}
+                    </li>
+                </ul>
                 <p>{{drinkInstructions[index]}}</p>
                 </div>
             </li>
@@ -29,6 +33,7 @@
                 drinkData: {},
                 drinkTitles: [],
                 drinkImages: [],
+                drinkIngredients: {},
                 drinkInstructions: [],
                 drinkQuery: null
             }
@@ -37,19 +42,41 @@
             getRecipe(drinkQuery){
                 this.drinkTitles =[];
                 this.drinkImages = [];
+                this.drinkIngredients = [];
                 this.drinkInstructions = [];
             APICallService.getDrink(drinkQuery)
             .then(response => {
-                this.drinkData = response.data;
-                for(let i = 0; i < this.drinkData.drinks.length; i++){
-                    this.drinkTitles.push(this.drinkData.drinks[i].strDrink);
-                    this.drinkImages.push(this.drinkData.drinks[i].strDrinkThumb)
-                    this.drinkInstructions.push(this.drinkData.drinks[i].strInstructions)
-                }
+                this.drinkData = response.data.drinks;
+                this.sortData(this.drinkData);
             })
             .catch(error => {
                 console.error(error.response);
             })
+            },
+            sortData(data){
+                for(let i = 0; i < data.length; i++){
+                    let tempArray = []
+                    this.drinkTitles.push(data[i].strDrink);
+                    this.drinkImages.push(data[i].strDrinkThumb);
+                    this.drinkInstructions.push(data[i].strInstructions);
+                    //This is terrible, I need to find a better way 
+                    tempArray.push(data[i].strIngredient1)
+                    tempArray.push(data[i].strIngredient2)
+                    tempArray.push(data[i].strIngredient3)
+                    tempArray.push(data[i].strIngredient4)
+                    tempArray.push(data[i].strIngredient5)
+                    tempArray.push(data[i].strIngredient6)
+                    tempArray.push(data[i].strIngredient7)
+                    tempArray.push(data[i].strIngredient8)
+                    tempArray.push(data[i].strIngredient9)
+                    tempArray.push(data[i].strIngredient10)
+                    tempArray.push(data[i].strIngredient11)
+                    tempArray.push(data[i].strIngredient12)
+                    tempArray.push(data[i].strIngredient13)
+                    tempArray.push(data[i].strIngredient14)
+                    tempArray.push(data[i].strIngredient15)
+                    this.drinkIngredients[i] = tempArray.filter(item => item.length > 1);
+                }
             }
         }
     }

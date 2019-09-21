@@ -3,7 +3,7 @@
         <input type="text" name="drink" id="" placeholder="your favorite drink" v-model="drinkQuery">
         <button @click="getRecipe(drinkQuery)">Get Recipe</button>
         <h1>{{pageTitle}}</h1>
-        
+        <h4 v-if="noData == true">Sorry, that drink is not in our database, please try another, Thank you.</h4>
         <ul>
             <li v-for="(title, index) in drinkTitles" :key="index">
                 <div>
@@ -35,19 +35,26 @@
                 drinkImages: [],
                 drinkIngredients: {},
                 drinkInstructions: [],
-                drinkQuery: null
+                drinkQuery: null,
+                noData: Boolean
             }
         },
         methods: {
             getRecipe(drinkQuery){
+                this.noData = false;
                 this.drinkTitles =[];
                 this.drinkImages = [];
                 this.drinkIngredients = [];
                 this.drinkInstructions = [];
             APICallService.getDrink(drinkQuery)
             .then(response => {
-                this.drinkData = response.data.drinks;
-                this.sortData(this.drinkData);
+                     this.drinkData = response.data.drinks;
+                if(this.drinkData == undefined){
+                    this.noData = true;
+                } else {
+                    this.sortData(this.drinkData);
+                   
+                }
             })
             .catch(error => {
                 console.error(error.response);

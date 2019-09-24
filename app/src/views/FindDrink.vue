@@ -1,8 +1,8 @@
 <template>
     <div>
+        <h1>{{pageTitle}}</h1>
         <input type="text" name="drink" id="" placeholder="your favorite drink" v-model="drinkQuery">
         <button @click="getRecipe(drinkQuery)">Get Recipe</button>
-        <h1>{{pageTitle}}</h1>
         <h4 v-if="noData == true">Sorry, that drink is not in our database, please try another, Thank you.</h4>
         <ul>
             <li v-for="(title, index) in drinkTitles" :key="index">
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-    import APICallService from '@/services/APICallService.js'
+    import APICallService from '@/services/APICallService.js';
     
     export default {
         data() {

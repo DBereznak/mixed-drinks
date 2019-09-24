@@ -2,7 +2,7 @@
     <div class="top-nav">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> | 
+      <router-link to="/find-ingredient">Find Ingredient</router-link> | 
       <router-link to="/find-drink">Find Drink</router-link>
     </div>
     </div>

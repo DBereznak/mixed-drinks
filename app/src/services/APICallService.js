@@ -12,5 +12,9 @@ const apiClient = axios.create({
 export default {
   getDrink(drink) {
     return apiClient.get(`/api/json/v1/1/search.php?s=${drink}`);
+  },
+
+  getIngredient(ingredient){
+    return apiClient.get(`/api/json/v1/1/search.php?i=${ingredient}`);
   }
 };
